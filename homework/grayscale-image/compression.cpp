@@ -4,11 +4,15 @@
 std::vector<std::pair<uint8_t, uint8_t>> compressGrayscale(const std::array<std::array<uint8_t, width>, height>& image)
 {
     std::vector<std::pair<uint8_t, uint8_t>> result{};
+    result.reserve(width * height);
+    const auto size_of_image = image.size();
 
-    for (size_t i = 0; i < image.size(); ++i)
+    for (size_t i = 0; i < size_of_image; ++i)
     {
-        result.push_back(std::pair<uint8_t, uint8_t>(image[i][0], 1));
-        for (size_t j = 1;j < image.at(i).size(); ++j)
+        result.push_back(std::make_pair(image[i][0], 1));
+        const auto size_of_pair = image.at(i).size();
+
+        for (size_t j = 1;j < size_of_pair; ++j)
         {
             if (image[i][j] == result.back().first)
             {
@@ -16,7 +20,7 @@ std::vector<std::pair<uint8_t, uint8_t>> compressGrayscale(const std::array<std:
             }
             else
             {
-                result.push_back(std::pair<uint8_t, uint8_t>(image[i][j], 1));
+                result.push_back(std::make_pair(image[i][j], 1));
             }
         }
         
