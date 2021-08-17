@@ -1,12 +1,15 @@
 #include <iostream>
+#include <algorithm>
 #include "compression.hpp"
 
 std::vector<std::pair<uint8_t, uint8_t>> compressGrayscale(const std::array<std::array<uint8_t, width>, height>& image)
 {
-    std::vector<std::pair<uint8_t, uint8_t>> result{};
+    std::vector<std::pair<uint8_t, uint8_t>> result;
+    std::vector<uint8_t> tmp;
     result.reserve(width * height);
     const auto size_of_image = image.size();
 
+/*
     for (size_t i = 0; i < size_of_image; ++i)
     {
         result.push_back(std::make_pair(image[i][0], 1));
@@ -24,7 +27,16 @@ std::vector<std::pair<uint8_t, uint8_t>> compressGrayscale(const std::array<std:
             }
         }
         
+       
     }
+    */
+    auto f = [&tmp](auto &row)
+    {
+        std::copy(row.begin(), row.end(), std::back_inserter(tmp));
+    };
+
+    std::for_each(image.cbegin(), image.cend(), f);
+
     return result;
 }
 
